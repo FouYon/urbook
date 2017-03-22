@@ -1,7 +1,6 @@
 import React from 'react';
 import List from 'antd-mobile/lib/list';
 import Button from 'antd-mobile/lib/button';
-// import Card from 'antd-mobile/lib/card';
 import { Icon, Card } from 'antd';
 import styles from './user.less';
 
