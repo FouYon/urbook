@@ -1,5 +1,4 @@
-/* global localStorage document window */
-import { Toast } from 'antd-mobile';
+import { message } from 'antd';
 import { login, signup, logout } from '../services/app';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
@@ -73,14 +72,14 @@ export default {
         showSignup: true
       };
     },
-    switchTagBar(state, { payload }) {
+    switchTabBar(state, { payload }) {
       return {
         ...state,
         ...payload
       };
     },
     loginSuccess(state, { payload }) {
-      Toast.success('登录成功', ERROR_MSG_DURATION);
+      message.success('登录成功', ERROR_MSG_DURATION);
       return {
         ...state,
         ...payload,
@@ -89,7 +88,7 @@ export default {
       };
     },
     signupSuccess(state) {
-      Toast.success('注册成功', ERROR_MSG_DURATION);
+      message.success('注册成功', ERROR_MSG_DURATION);
       return {
         ...state,
         showLogin: true,
@@ -103,14 +102,14 @@ export default {
       };
     },
     loginFail(state, { payload }) {
-      Toast.fail(payload.error, ERROR_MSG_DURATION);
+      message.error(payload.error, ERROR_MSG_DURATION);
       return {
         ...state,
         showLogin: true
       };
     },
     signupFail(state, { payload }) {
-      Toast.fail(payload.error, ERROR_MSG_DURATION);
+      message.error(payload.error, ERROR_MSG_DURATION);
       return {
         ...state,
         showSignup: true

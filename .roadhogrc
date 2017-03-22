@@ -16,7 +16,7 @@
   },
   "extraBabelPlugins": [
     "transform-runtime",
-    ["import", { "libraryName": "antd-mobile", "style": true }]
+    ["import", { "libraryName": "antd", "style": true }]
   ],
   "env": {
     "development": {

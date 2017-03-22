@@ -1,5 +1,5 @@
 import dva from 'dva';
-import { Toast } from 'antd-mobile';
+import { message } from 'antd';
 import createLoading from 'dva-loading';
 import './index.html';
 
@@ -7,7 +7,7 @@ const ERROR_MSG_DURATION = 3; // 3 秒
 // 1. Initialize
 const app = dva({
   onError(e) {
-    Toast.fail(e.message, ERROR_MSG_DURATION);
+    message.error(e.message, ERROR_MSG_DURATION);
   }
 });
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { TabBar } from 'antd-mobile';
 import { Icon } from 'antd';
+import TabBar from 'antd-mobile/lib/tab-bar';
 import Login from '../components/login';
 import Signup from '../components/signup';
+import User from '../components/tab/user';
 
 /**
  * 第一个Object { app, children, dispatch, history, location, params }
@@ -13,10 +14,25 @@ import Signup from '../components/signup';
  * location表示当前路径
  */
 
-const App = ({ app, dispatch }) => {
+const App = ({ app, dispatch, loading }) => {
   const { showLogin, showSignup, selected } = app;
-  const loginProp = { dispatch };
-  const signupProp = { dispatch };
+  const loginProp = {
+    onOk(data) {
+      dispatch({ type: 'app/login', payload: data });
+    },
+    loginButtonLoading: loading,
+    dispatch
+  };
+  const signupProp = {
+    onOk(data) {
+      dispatch({ type: 'app/signup', payload: data });
+    },
+    loginButtonLoading: loading,
+    dispatch
+  };
+  const userProp = {
+    dispatch
+  };
   return (
     <div>
       <div style={{ display: showLogin ? 'block' : 'none' }}>
@@ -30,55 +46,54 @@ const App = ({ app, dispatch }) => {
           unselectedTintColor='#949494'
           tintColor='#33A3F4'
           barTintColor='white'
-          style={{ display: 'none' }}
         >
           <TabBar.Item
             title='首页'
             key='首页'
-            icon={<Icon type='home' />}
-            selectedIcon={<Icon type='home' />}
-            onPress={() => {
-              dispatch({ type: 'app/switchTagBar', payload: { selected: 1 } });
-            }}
+            icon={<Icon type='home' style={{ fontSize: 'x-large' }} />}
+            selectedIcon={<Icon type='home' style={{ fontSize: 'x-large' }} />}
             selected={selected === 1}
+            onPress={() => {
+              dispatch({ type: 'app/switchTabBar', payload: { selected: 1 } });
+            }}
           >
-            <div>这里有内容</div>
+            Tab1
           </TabBar.Item>
           <TabBar.Item
             title='二手书'
             key='二手书'
-            icon={<Icon type='book' />}
-            selectedIcon={<Icon type='book' />}
-            onPress={() => {
-              dispatch({ type: 'app/switchTagBar', payload: { selected: 2 } });
-            }}
+            icon={<Icon type='book' style={{ fontSize: 'x-large' }} />}
+            selectedIcon={<Icon type='book' style={{ fontSize: 'x-large' }} />}
             selected={selected === 2}
+            onPress={() => {
+              dispatch({ type: 'app/switchTabBar', payload: { selected: 2 } });
+            }}
           >
-            <p>Tab2</p>
+            Tab2
           </TabBar.Item>
           <TabBar.Item
-            icon={<Icon type='environment' />}
-            selectedIcon={<Icon type='environment' />}
-            title='附近'
-            key='附近'
-            onPress={() => {
-              dispatch({ type: 'app/switchTagBar', payload: { selected: 3 } });
-            }}
+            title='闲置'
+            key='闲置'
+            icon={<Icon type='eye' style={{ fontSize: 'x-large' }} />}
+            selectedIcon={<Icon type='eye' style={{ fontSize: 'x-large' }} />}
             selected={selected === 3}
+            onPress={() => {
+              dispatch({ type: 'app/switchTabBar', payload: { selected: 3 } });
+            }}
           >
-            <div>这是TabBar3的内容</div>
+            Tab3
           </TabBar.Item>
           <TabBar.Item
             title='我的'
             key='我的'
-            icon={<Icon type='user' />}
-            selectedIcon={<Icon type='user' />}
-            onPress={() => {
-              dispatch({ type: 'app/switchTagBar', payload: { selected: 4 } });
-            }}
+            icon={<Icon type='smile' style={{ fontSize: 'x-large' }} />}
+            selectedIcon={<Icon type='smile' style={{ fontSize: 'x-large' }} />}
             selected={selected === 4}
+            onPress={() => {
+              dispatch({ type: 'app/switchTabBar', payload: { selected: 4 } });
+            }}
           >
-            <div>Tab4</div>
+            <User {...userProp} />
           </TabBar.Item>
         </TabBar>
       </div>
@@ -86,4 +101,4 @@ const App = ({ app, dispatch }) => {
   );
 };
 
-export default connect(({ app }) => ({ app }))(App);
+export default connect(({ app, loading }) => ({ app, loading: loading.global }))(App);
