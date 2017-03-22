@@ -15,7 +15,7 @@ export default {
   },
   subscriptions: {
     setup({ dispatch }) {
-      dispatch({ type: 'showLogin', payload: { showLogin: true } });
+      // dispatch({ type: 'showLogin', payload: { showLogin: true } });
     }
   },
   effects: {

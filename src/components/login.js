@@ -1,4 +1,5 @@
 import React from 'react';
+import { WhiteSpace } from 'antd-mobile';
 import { Button, Row, Form, Input, Icon } from 'antd';
 import styles from './login.less';
 
@@ -42,9 +43,8 @@ const login = ({
           <Button type='primary' size='large' onClick={handleOk} loading={loginButtonLoading}>
             登录
           </Button>
-          <br />
-          <br />
-          <a onClick={() => { dispatch({ type: 'app/showSignup' }); }} style={{ float: 'right' }}>注册</a>
+          <WhiteSpace />
+          <a onClick={() => { dispatch({ type: 'app/showSignup' }); }} style={{ float: 'right', fontSize: 'medium' }}>注册</a>
         </Row>
       </form>
     </div>

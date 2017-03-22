@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Icon } from 'antd';
-import TabBar from 'antd-mobile/lib/tab-bar';
+import { TabBar } from 'antd-mobile';
+// import TabBar from 'antd-mobile/lib/tab-bar';
 import Login from '../components/login';
 import Signup from '../components/signup';
 import User from '../components/tab/user';
