@@ -3,8 +3,7 @@
   "scripts": {
     "start": "nodemon app.js &! roadhog server",
     "build": "roadhog build && cp -a dist/* static",
-    "test": "roadhog test",
-    "precommit": "npm run lint"
+    "test": "roadhog test"
   },
   "dependencies": {
     "antd": "^2.6.4",
