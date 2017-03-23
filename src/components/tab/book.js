@@ -1,35 +1,10 @@
 import React from 'react';
 import { Button, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
-import ImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
-import styles from './home.less';
+import styles from './book.less';
 
-const Home = () => {
-  const images = [
-    {
-      original: 'http://lorempixel.com/1000/600/nature/1/',
-      thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-    },
-    {
-      original: 'http://lorempixel.com/1000/600/nature/2/',
-      thumbnail: 'http://lorempixel.com/250/150/nature/2/'
-    },
-    {
-      original: 'http://lorempixel.com/1000/600/nature/3/',
-      thumbnail: 'http://lorempixel.com/250/150/nature/3/'
-    }
-  ];
+const Book = () => {
   return (
     <div style={{ marginBottom: '120px' }}>
-      <ImageGallery
-        items={images}
-        slideInterval={2000}
-        showNav={false}
-        showFullscreenButton={false}
-        showPlayButton={false}
-        showBullets
-        showThumbnails={false}
-      />
       <WhiteSpace />
       <WingBlank>
         <Card>
@@ -94,4 +69,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Book;

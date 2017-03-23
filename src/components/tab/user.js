@@ -14,15 +14,13 @@ const User = ({ dispatch }) => {
     <div>
       <Card full>
         <Card.Header
-          title='这是 title'
+          title={<div style={{ marginLeft: '30px' }}>用户名</div>}
           thumb={require('../../assets/images/porter.png')}
           thumbStyle={{ width: '200px' }}
-          extra={<span>this is extra</span>}
         />
         <Card.Body>
-          <div>这是卡片内容</div>
+          <div>用用户简介用户简介用户用户简介用户简介用户简介用户简介户简介</div>
         </Card.Body>
-        <Card.Footer content='这是卡尾' extra={<div>这是尾部介绍</div>} />
       </Card>
       <WhiteSpace />
       <List>
