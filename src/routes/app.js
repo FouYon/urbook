@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Icon } from 'antd';
-import { TabBar } from 'antd-mobile';
-// import TabBar from 'antd-mobile/lib/tab-bar';
+import { TabBar, Icon } from 'antd-mobile';
 import Login from '../components/login';
 import Signup from '../components/signup';
 import User from '../components/tab/user';
+import Home from '../components/tab/home';
 
 /**
  * 第一个Object { app, children, dispatch, history, location, params }
@@ -15,25 +14,11 @@ import User from '../components/tab/user';
  * location表示当前路径
  */
 
-const App = ({ app, dispatch, loading }) => {
+const App = ({ app, dispatch }) => {
   const { showLogin, showSignup, selected } = app;
-  const loginProp = {
-    onOk(data) {
-      dispatch({ type: 'app/login', payload: data });
-    },
-    loginButtonLoading: loading,
-    dispatch
-  };
-  const signupProp = {
-    onOk(data) {
-      dispatch({ type: 'app/signup', payload: data });
-    },
-    loginButtonLoading: loading,
-    dispatch
-  };
-  const userProp = {
-    dispatch
-  };
+  const loginProp = { dispatch };
+  const signupProp = { dispatch };
+  const userProp = { dispatch };
   return (
     <div>
       <div style={{ display: showLogin ? 'block' : 'none' }}>
@@ -51,20 +36,20 @@ const App = ({ app, dispatch, loading }) => {
           <TabBar.Item
             title='首页'
             key='首页'
-            icon={<Icon type='home' style={{ fontSize: 'x-large' }} />}
-            selectedIcon={<Icon type='home' style={{ fontSize: 'x-large' }} />}
+            icon={<Icon type={require('../assets/home-1.svg')} />}
+            selectedIcon={<Icon type={require('../assets/home-1.svg')} />}
             selected={selected === 1}
             onPress={() => {
               dispatch({ type: 'app/switchTabBar', payload: { selected: 1 } });
             }}
           >
-            Tab1
+            <Home />
           </TabBar.Item>
           <TabBar.Item
             title='二手书'
             key='二手书'
-            icon={<Icon type='book' style={{ fontSize: 'x-large' }} />}
-            selectedIcon={<Icon type='book' style={{ fontSize: 'x-large' }} />}
+            icon={<Icon type={require('../assets/notebook-5.svg')} />}
+            selectedIcon={<Icon type={require('../assets/notebook-5.svg')} />}
             selected={selected === 2}
             onPress={() => {
               dispatch({ type: 'app/switchTabBar', payload: { selected: 2 } });
@@ -75,8 +60,8 @@ const App = ({ app, dispatch, loading }) => {
           <TabBar.Item
             title='闲置'
             key='闲置'
-            icon={<Icon type='eye' style={{ fontSize: 'x-large' }} />}
-            selectedIcon={<Icon type='eye' style={{ fontSize: 'x-large' }} />}
+            icon={<Icon type={require('../assets/view.svg')} />}
+            selectedIcon={<Icon type={require('../assets/view.svg')} />}
             selected={selected === 3}
             onPress={() => {
               dispatch({ type: 'app/switchTabBar', payload: { selected: 3 } });
@@ -87,8 +72,8 @@ const App = ({ app, dispatch, loading }) => {
           <TabBar.Item
             title='我的'
             key='我的'
-            icon={<Icon type='smile' style={{ fontSize: 'x-large' }} />}
-            selectedIcon={<Icon type='smile' style={{ fontSize: 'x-large' }} />}
+            icon={<Icon type={require('../assets/user.svg')} />}
+            selectedIcon={<Icon type={require('../assets/user.svg')} />}
             selected={selected === 4}
             onPress={() => {
               dispatch({ type: 'app/switchTabBar', payload: { selected: 4 } });

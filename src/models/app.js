@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Toast } from 'antd-mobile';
 import { login, signup, logout } from '../services/app';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
@@ -15,7 +15,7 @@ export default {
   },
   subscriptions: {
     setup({ dispatch }) {
-      // dispatch({ type: 'showLogin', payload: { showLogin: true } });
+      dispatch({ type: 'showLogin' });
     }
   },
   effects: {
@@ -79,7 +79,7 @@ export default {
       };
     },
     loginSuccess(state, { payload }) {
-      message.success('登录成功', ERROR_MSG_DURATION);
+      Toast.success('登录成功', ERROR_MSG_DURATION);
       return {
         ...state,
         ...payload,
@@ -88,7 +88,7 @@ export default {
       };
     },
     signupSuccess(state) {
-      message.success('注册成功', ERROR_MSG_DURATION);
+      Toast.success('注册成功', ERROR_MSG_DURATION);
       return {
         ...state,
         showLogin: true,
@@ -102,14 +102,14 @@ export default {
       };
     },
     loginFail(state, { payload }) {
-      message.error(payload.error, ERROR_MSG_DURATION);
+      Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
         ...state,
         showLogin: true
       };
     },
     signupFail(state, { payload }) {
-      message.error(payload.error, ERROR_MSG_DURATION);
+      Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
         ...state,
         showSignup: true

@@ -13,7 +13,7 @@ const app = express();
 const port = 5000;
 const host = '0.0.0.0';
 
-app.use(express.static(path.resolve('./dist')));
+app.use(express.static(path.resolve('./static')));
 app.use('/mongo', mongoExpress(mongoExpressConfig));
 
 app.use(compression());

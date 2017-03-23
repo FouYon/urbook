@@ -1,6 +1,5 @@
 import React from 'react';
-import { List, Button, WhiteSpace, Card } from 'antd-mobile';
-import { Icon } from 'antd';
+import { List, Button, WingBlank, WhiteSpace, Card, Icon } from 'antd-mobile';
 import styles from './user.less';
 
 const Item = List.Item;
@@ -15,35 +14,44 @@ const User = ({ dispatch }) => {
     <div>
       <Card full>
         <Card.Header
-          style={{ fontSize: 'large' }}
-          title='用户姓名'
-          thumb='https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png'
+          title='这是 title'
+          thumb={require('../../assets/images/porter.png')}
+          thumbStyle={{ width: '200px' }}
+          extra={<span>this is extra</span>}
         />
+        <Card.Body>
+          <div>这是卡片内容</div>
+        </Card.Body>
+        <Card.Footer content='这是卡尾' extra={<div>这是尾部介绍</div>} />
       </Card>
+      <WhiteSpace />
       <List>
         <Item
           className={styles.item}
-          thumb={<Icon type='setting' />}
+          thumb={<Icon type={require('../../assets/settings-4.svg')} />}
           arrow='horizontal'
           onClick={() => {}}
-        ><p style={{ fontSize: 'large' }}>设置</p></Item>
+        >设置</Item>
         <Item
           className={styles.item}
-          thumb={<Icon type='star' />}
+          thumb={<Icon type={require('../../assets/like-2.svg')} />}
           arrow='horizontal'
           onClick={() => {}}
-        ><p style={{ fontSize: 'large' }}>收藏</p></Item>
+        >收藏</Item>
       </List>
       <WhiteSpace />
       <List>
         <Item
           className={styles.item}
-          thumb={<Icon type='user' />}
+          thumb={<Icon type={require('../../assets/paper-plane-1.svg')} />}
           arrow='horizontal'
           onClick={() => {}}
-        ><p style={{ fontSize: 'large' }}>关于我们</p></Item>
+        >关于我们</Item>
       </List>
-      <Button size='small' type='warning' {...logoutProp}><p style={{ fontSize: 'large' }}>退出登录</p></Button>
+      <WhiteSpace />
+      <WingBlank>
+        <Button type='warning' {...logoutProp}>退出登录</Button>
+      </WingBlank>
     </div>
   );
 };

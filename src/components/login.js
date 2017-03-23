@@ -1,54 +1,55 @@
 import React from 'react';
-import { WhiteSpace } from 'antd-mobile';
-import { Button, Row, Form, Input, Icon } from 'antd';
-import styles from './login.less';
+import { Button, List, InputItem, WhiteSpace, WingBlank } from 'antd-mobile';
+import { createForm } from 'rc-form';
 
-const FormItem = Form.Item;
-
-const login = ({
-  loginButtonLoading,
-  onOk,
-  form: {
-    getFieldDecorator,
-    validateFieldsAndScroll
-  },
-  dispatch
+var phone = '';
+var password = '';
+const Login = ({
+  dispatch,
+  form: { getFieldProps }
 }) => {
-  function handleOk() {
-    validateFieldsAndScroll((errors, values) => {
-      if (errors) {
-        return;
-      }
-      onOk(values);
-    });
-  }
-
+  const loginProp = {
+    onClick() {
+      dispatch({ type: 'app/login', payload: { phone, password } });
+    }
+  };
+  const signupProp = {
+    onClick() {
+      dispatch({ type: 'app/showSignup' });
+    }
+  };
   return (
-    <div className={styles.form}>
-      <div className={styles.logo}>
-        <span>二手书交易平台</span>
-      </div>
-      <form>
-        <FormItem hasFeedback>
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: '请填写手机号' }]
-          })(<Input size='large' addonBefore={<Icon type='phone' />} onPressEnter={handleOk} placeholder='手机号' />)}
-        </FormItem>
-        <FormItem hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: '请填写密码' }, { type: 'string', min: 6, max: 32, message: '密码最少6位' }]
-          })(<Input size='large' addonBefore={<Icon type='lock' />} type='password' onPressEnter={handleOk} placeholder='密码' />)}
-        </FormItem>
-        <Row>
-          <Button type='primary' size='large' onClick={handleOk} loading={loginButtonLoading}>
-            登录
-          </Button>
-          <WhiteSpace />
-          <a onClick={() => { dispatch({ type: 'app/showSignup' }); }} style={{ float: 'right', fontSize: 'medium' }}>注册</a>
-        </Row>
-      </form>
+    <div>
+      <WhiteSpace />
+      <List renderHeader={() => '登录'}>
+        <InputItem
+          {...getFieldProps('phone', {
+            onChange(val) {
+              phone = val;
+            }
+          })}
+          clear
+          type='phone'
+          placeholder='186 1234 1234'
+        >手机号码</InputItem>
+        <InputItem
+          {...getFieldProps('password', {
+            onChange(val) {
+              password = val;
+            }
+          })}
+          type='password'
+          placeholder='****'
+        >密码</InputItem>
+      </List>
+      <WingBlank>
+        <WhiteSpace />
+        <Button type='primary' {...loginProp}>登录</Button>
+        <WhiteSpace />
+        <Button type='ghost' {...signupProp}>注册</Button>
+      </WingBlank>
     </div>
   );
 };
 
-export default Form.create()(login);
+export default createForm()(Login);
