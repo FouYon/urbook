@@ -15,7 +15,7 @@ const User = ({ dispatch }) => {
       <Card full>
         <Card.Header
           title={<div style={{ marginLeft: '30px' }}>用户名</div>}
-          thumb={require('../../assets/images/porter.png')}
+          thumb={require('../../assets/images/porter.jpg')}
           thumbStyle={{ width: '200px' }}
         />
         <Card.Body>

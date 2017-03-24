@@ -39,7 +39,7 @@ const Home = () => {
             extra={<span>50元</span>}
           />
           <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.png')} style={{ width: '20%' }} />
+            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
             <p>这本书用乐好久列</p>
           </Card.Body>
           <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
@@ -54,7 +54,7 @@ const Home = () => {
             extra={<span>50元</span>}
           />
           <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.png')} style={{ width: '20%' }} />
+            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
             <p>这本书用乐好久列</p>
           </Card.Body>
           <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
@@ -69,7 +69,7 @@ const Home = () => {
             extra={<span>50元</span>}
           />
           <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.png')} style={{ width: '20%' }} />
+            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
             <p>这本书用乐好久列</p>
           </Card.Body>
           <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
@@ -84,7 +84,7 @@ const Home = () => {
             extra={<span>50元</span>}
           />
           <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.png')} style={{ width: '20%' }} />
+            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
             <p>这本书用乐好久列</p>
           </Card.Body>
           <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
