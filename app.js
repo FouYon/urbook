@@ -4,7 +4,7 @@ const mongoExpress = require('mongo-express/middleware');
 const mongoExpressConfig = require('./lib/mongo_express_config');
 const expressValidator = require('express-validator');
 const compression = require('compression');
-// const jwt = require('express-jwt');
+const jwt = require('express-jwt');
 const path = require('path');
 const router = require('./router');
 
@@ -39,7 +39,7 @@ app.use(expressValidator({
     }
   }
 }));
-
+app.use(jwt({ secret: 'jwt' }).unless({ path: ['/', '/api/login'] }));
 app.listen(port, host, () => {
   console.log(`Node app is running on http://${host}:${port}`);
 });

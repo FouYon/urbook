@@ -104,15 +104,13 @@ export default {
     loginFail(state, { payload }) {
       Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
-        ...state,
-        showLogin: true
+        ...state
       };
     },
     signupFail(state, { payload }) {
       Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
-        ...state,
-        showSignup: true
+        ...state
       };
     }
   }

@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, List, InputItem, WhiteSpace, WingBlank } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
+// 搞不懂？？
+// 如果不弄到全局变量的话
+// InputItem onChange事件不能赋值
 var phone = '';
 var password = '';
 var chckpass = '';
@@ -16,7 +19,6 @@ const Login = ({
   };
   const signupProp = {
     onClick() {
-      console.log(phone, password, chckpass);
       dispatch({ type: 'app/signup', payload: { phone, password, chckpass } });
     }
   };

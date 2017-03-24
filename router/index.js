@@ -9,12 +9,12 @@ router
   .get('/', (req, res) => res.sendFile('/index.html'));
 
 router
-  .post('/login', Login.post);
+  .post('/api/login', Login.post);
 
 router
-  .get('/logout', Logout.get);
+  .get('/api/logout', Logout.get);
 
 router
-  .post('/signup', Signup.post);
+  .post('/api/signup', Signup.post);
 
 router.get('*', (req, res) => res.redirect('/'));
