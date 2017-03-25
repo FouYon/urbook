@@ -6,7 +6,6 @@ const User = db.model('User');
 
 module.exports.post = (req, res) => {
   const { phone, password, chckpass } = req.body;
-  // if (!phone) return res.status(200).json({ error: '手机格式不正确' });
   if (password !== chckpass) return res.status(200).json({ error: '两次输入密码不一致' });
   User.insertMany({ phone, password })
     .then(() => {

@@ -1,5 +1,7 @@
+/* global localStorage, window */
 import { Toast } from 'antd-mobile';
-import { login, signup, logout } from '../services/app';
+import { login, signup } from '../services/app';
+import { axios } from '../utils/request';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
 
@@ -15,26 +17,37 @@ export default {
   },
   subscriptions: {
     setup({ dispatch }) {
-      dispatch({ type: 'showLogin' });
+      const token = localStorage.getItem('jwttoken');
+      if (token) {
+        axios.defaults.headers.common.Authorization = 'Bearer ' + token;
+        dispatch({ type: 'login', payload: { token } });
+      } else {
+        dispatch({ type: 'showLogin' });
+      }
     }
   },
   effects: {
     *login({ payload }, { call, put }) {
       const { data } = yield call(login, payload);
-      if (data.message) {
+      if (data.tokenLogin) {
+        const { tokenLogin, phone } = data;
+        yield put({ type: 'loginSuccess', payload: { phone, tokenLogin } });
+      } else if (data.message) {
         yield put({
           type: 'loginSuccess',
           payload: {
             user: {
               phone: data.phone
-            }
+            },
+            token: data.token
           }
         });
       } else {
         yield put({
           type: 'loginFail',
           payload: {
-            error: data.error
+            error: data.error,
+            tokenFail: data.tokenFail
           }
         });
       }
@@ -48,12 +61,6 @@ export default {
           type: 'signupFail',
           payload: { error: data.error }
         });
-      }
-    },
-    *logout({ payload }, { call, put }) {
-      const { data } = yield call(logout, payload);
-      if (data.message) {
-        yield put({ type: 'logoutSuccess' });
       }
     }
   },
@@ -79,13 +86,24 @@ export default {
       };
     },
     loginSuccess(state, { payload }) {
-      Toast.success('登录成功', ERROR_MSG_DURATION);
-      return {
-        ...state,
-        ...payload,
-        showLogin: false,
-        showSignup: false
-      };
+      if (payload.tokenLogin) {
+        return {
+          ...state,
+          user: { phone: payload.phone },
+          showLogin: false,
+          showSignup: false
+        };
+      } else {
+        Toast.success('登录成功', ERROR_MSG_DURATION);
+        axios.defaults.headers.common.Authorization = 'Bearer ' + payload.token;
+        localStorage.setItem('jwttoken', payload.token);
+        return {
+          ...state,
+          ...payload,
+          showLogin: false,
+          showSignup: false
+        };
+      }
     },
     signupSuccess(state) {
       Toast.success('注册成功', ERROR_MSG_DURATION);
@@ -95,7 +113,8 @@ export default {
         showSignup: false
       };
     },
-    logoutSuccess(state) {
+    logout(state) {
+      localStorage.removeItem('jwttoken');
       return {
         ...state,
         showLogin: true
@@ -103,8 +122,10 @@ export default {
     },
     loginFail(state, { payload }) {
       Toast.fail(payload.error, ERROR_MSG_DURATION);
+      localStorage.removeItem('jwttoken');
       return {
-        ...state
+        ...state,
+        showLogin: true
       };
     },
     signupFail(state, { payload }) {

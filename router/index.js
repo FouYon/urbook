@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const Login = require('./api/login');
-const Logout = require('./api/logout');
 const Signup = require('./api/signup');
 
 module.exports = router;
@@ -12,9 +11,12 @@ router
   .post('/api/login', Login.post);
 
 router
-  .get('/api/logout', Logout.get);
+  .post('/api/signup', Signup.post);
 
 router
-  .post('/api/signup', Signup.post);
+  .get('/api/foo', (req, res) => {
+    if (req.error) return res.json({ error: req.error });
+    res.json({ message: '验证成功' });
+  });
 
 router.get('*', (req, res) => res.redirect('/'));

@@ -6,12 +6,8 @@ export function login(params) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(params)
+    data: params
   });
-}
-
-export function logout() {
-  return request('/api/logout', { method: 'get' });
 }
 
 export function signup(params) {
@@ -20,6 +16,6 @@ export function signup(params) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(params)
+    data: params
   });
 }

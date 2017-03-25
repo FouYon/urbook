@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import request from './request';
+import { request } from './request';
 import didmount from './didmount';
 
 module.exports = {

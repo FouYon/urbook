@@ -21,8 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-app.use(router);
+app.use(jwt({ secret: 'jwt' }).unless({ path: ['/', '/api/login', '/api/signup'] }));
 app.use(expressValidator({
   customValidators: {
     isArray(value) {
@@ -39,7 +38,19 @@ app.use(expressValidator({
     }
   }
 }));
-app.use(jwt({ secret: 'jwt' }).unless({ path: ['/', '/api/login'] }));
+
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    req.error = '请登录';
+    next();
+  } else if (err.message === 'jwt expired') {
+    req.error = '登录超时，请重新登录';
+    next();
+  } else next();
+});
+
+app.use(router);
+
 app.listen(port, host, () => {
   console.log(`Node app is running on http://${host}:${port}`);
 });
