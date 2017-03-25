@@ -13,7 +13,8 @@ export default {
     user: {
       phone: ''
     },
-    selected: 1
+    selected: 1,
+    showMask: false
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -132,6 +133,18 @@ export default {
       Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
         ...state
+      };
+    },
+    showMask(state) {
+      return {
+        ...state,
+        showMask: true
+      };
+    },
+    hideMask(state) {
+      return {
+        ...state,
+        showMask: false
       };
     }
   }
