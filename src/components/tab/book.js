@@ -19,11 +19,11 @@ const Book = ({ app, dispatch, loading }) => {
     dispatch({ type: 'app/showMask', payload: { user, title } });
   };
   return (
-    <div style={{ marginBottom: '120px' }}>
+    <div>
       <Mask visible={showMask}>
         <div style={{ height: '100vh', overflow: 'scroll', width: '100%' }}>
           <NavBar
-            style={{ position: 'fixed', height: '7vh', width: '100%', zIndex: '100' }}
+            style={{ position: 'fixed', height: '100px', width: '100%', zIndex: '100' }}
             leftContent='返回'
             rightContent={<Icon type={require('../../assets/like-1.svg')} onClick={() => console.log('clickme')} />}
             mode='light'
@@ -31,7 +31,7 @@ const Book = ({ app, dispatch, loading }) => {
               dispatch({ type: 'app/hideMask' });
             }}
           />
-          <WhiteSpace style={{ height: '8vh' }} />
+          <WhiteSpace style={{ height: '120px' }} />
           <WingBlank>
             <Card>
               <Card.Header
@@ -54,10 +54,10 @@ const Book = ({ app, dispatch, loading }) => {
             <div style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
               <ActivityIndicator size='large' />
             </div>
-            {comments.map(c => (
+            {comments.map((c, idx) => (
               <div>
                 <WhiteSpace />
-                <Card key={c.user + c.title}>
+                <Card key={c.user + c.title + idx}>
                   <Card.Header
                     title={c.user}
                     thumb={c.thumb}
@@ -89,8 +89,8 @@ const Book = ({ app, dispatch, loading }) => {
         <ActivityIndicator size='large' />
       </div>
       <WhiteSpace />
-      {bookData.map(d => (
-        <WingBlank key={d.user + d.title}>
+      {bookData.map((d, idx) => (
+        <WingBlank key={d.user + d.title + idx}>
           <Card onClick={() => showDetail({ user: d.user, title: d.title })} >
             <Card.Header
               title={d.title}
