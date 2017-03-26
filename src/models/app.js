@@ -1,6 +1,6 @@
 /* global localStorage, window */
 import { Toast } from 'antd-mobile';
-import { login, signup } from '../services/app';
+import { login, signup, getcomments, getbook } from '../services/app';
 import { axios } from '../utils/request';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
@@ -14,7 +14,10 @@ export default {
       phone: ''
     },
     selected: 1,
-    showMask: false
+    showMask: false,
+    bookData: [],
+    cur: {},
+    comments: []
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -60,6 +63,28 @@ export default {
       } else {
         yield put({
           type: 'signupFail',
+          payload: { error: data.error }
+        });
+      }
+    },
+    *getcomments({ payload }, { call, put }) {
+      const { data } = yield call(getcomments, payload);
+      if (data.message) {
+        yield put({ type: 'updateComments', payload: data });
+      } else {
+        yield put({
+          type: 'updateCommentsFail',
+          payload: { error: data.error }
+        });
+      }
+    },
+    *getbook({ payload }, { call, put }) {
+      const { data } = yield call(getbook, payload);
+      if (data.message) {
+        yield put({ type: 'updateBook', payload: data });
+      } else {
+        yield put({
+          type: 'updateBookFail',
           payload: { error: data.error }
         });
       }
@@ -135,9 +160,12 @@ export default {
         ...state
       };
     },
-    showMask(state) {
+    showMask(state, { payload }) {
+      const { user, title } = payload;
+      const cur = state.bookData.find(d => d.user === user && d.title === title);
       return {
         ...state,
+        cur,
         showMask: true
       };
     },
@@ -145,6 +173,30 @@ export default {
       return {
         ...state,
         showMask: false
+      };
+    },
+    updateComments(state, { payload }) {
+      return {
+        ...state,
+        comments: payload.data
+      };
+    },
+    updateCommentsFail(state, { payload }) {
+      Toast.fail(payload.error, ERROR_MSG_DURATION);
+      return {
+        ...state
+      };
+    },
+    updateBook(state, { payload }) {
+      return {
+        ...state,
+        bookData: payload.data
+      };
+    },
+    updateBookFail(state, { payload }) {
+      Toast.fail(payload.error, ERROR_MSG_DURATION);
+      return {
+        ...state
       };
     }
   }

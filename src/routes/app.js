@@ -17,7 +17,7 @@ import Find from '../components/tab/find';
  */
 
 const App = ({ app, dispatch }) => {
-  const { showLogin, showSignup, selected } = app;
+  const { showLogin, showSignup, selected, user } = app;
   const loginProp = { dispatch };
   const signupProp = { dispatch };
   const userProp = { dispatch };
@@ -52,6 +52,7 @@ const App = ({ app, dispatch }) => {
           selected={selected === 2}
           onPress={() => {
             dispatch({ type: 'app/switchTabBar', payload: { selected: 2 } });
+            dispatch({ type: 'app/getbook', payload: { user } });
           }}
         >
           <Book />

@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Login = require('./api/login');
 const Signup = require('./api/signup');
+const Comments = require('./api/comments.js');
+const Book = require('./api/book.js');
 
 module.exports = router;
 
@@ -12,6 +14,12 @@ router
 
 router
   .post('/api/signup', Signup.post);
+
+router
+  .get('/api/comments', Comments.get);
+
+router
+  .get('/api/book', Book.get);
 
 router
   .get('/api/foo', (req, res) => {

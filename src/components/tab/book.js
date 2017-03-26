@@ -1,157 +1,115 @@
 import React from 'react';
 import { connect } from 'dva';
-import { List, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
+import { ActivityIndicator, Button, TextareaItem, SearchBar, List, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
 import Mask from '../../components/mask';
 
-const Book = ({ app, dispatch }) => {
-  const { showMask } = app;
-  const MaskContent = (
-    <div style={{ height: '100vh', overflow: 'scroll', width: '100%' }}>
-      <NavBar
-        style={{ position: 'fixed', height: '7vh', width: '100%', zIndex: '100' }}
-        leftContent='返回'
-        rightContent={<Icon type={require('../../assets/like-1.svg')} onClick={() => console.log('clickme')} />}
-        mode='light'
-        onLeftClick={() => {
-          dispatch({ type: 'app/hideMask' });
-        }}
-      />
-      <WhiteSpace style={{ height: '8vh' }} />
-      <WingBlank>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-            extra={<span>50元</span>}
-          />
-          <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
-            <p>这本书用乐好久列</p>
-          </Card.Body>
-          <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
-        </Card>
-        <WhiteSpace />
-        <p>评论</p>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-          />
-          <Card.Body>
-            <p>我我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件家设很长的的文件</p>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-          />
-          <Card.Body>
-            <p>我我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件家设很长的的文件</p>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-          />
-          <Card.Body>
-            <p>我我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件家设很长的的文件</p>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-          />
-          <Card.Body>
-            <p>我我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件家设很长的的文件</p>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-          />
-          <Card.Body>
-            <p>我我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件我家设很长的的文件家设很长的的文件</p>
-          </Card.Body>
-        </Card>
-      </WingBlank>
-    </div>
-  );
-  const showDetail = () => {
-    dispatch({ type: 'app/showMask' });
+const Book = ({ app, dispatch, loading }) => {
+  const { showMask, bookData, cur, comments } = app;
+  const commentStyle = {
+    display: 'flex',
+    position: 'fixed',
+    left: '0',
+    bottom: '0',
+    width: '100vw',
+    zIndex: 300,
+    background: 'white'
+  };
+  const showDetail = ({ user, title }) => {
+    dispatch({ type: 'app/getcomments', payload: { user, title } });
+    dispatch({ type: 'app/showMask', payload: { user, title } });
   };
   return (
     <div style={{ marginBottom: '120px' }}>
       <Mask visible={showMask}>
-        {MaskContent}
+        <div style={{ height: '100vh', overflow: 'scroll', width: '100%' }}>
+          <NavBar
+            style={{ position: 'fixed', height: '7vh', width: '100%', zIndex: '100' }}
+            leftContent='返回'
+            rightContent={<Icon type={require('../../assets/like-1.svg')} onClick={() => console.log('clickme')} />}
+            mode='light'
+            onLeftClick={() => {
+              dispatch({ type: 'app/hideMask' });
+            }}
+          />
+          <WhiteSpace style={{ height: '8vh' }} />
+          <WingBlank>
+            <Card>
+              <Card.Header
+                title={cur.title}
+                thumb={cur.thumb}
+                extra={<span>{cur.extra}</span>}
+              />
+              <Card.Body>
+                {cur.imgs ? cur.imgs.map(img => (
+                  <img alt='mig' key={img} src={img} style={{ width: '20%' }} />
+                )) : ''}
+                <List.Item wrap>
+                  {cur.content}
+                </List.Item>
+              </Card.Body>
+              <Card.Footer content={cur.location} extra={<div>评论{cur.comment}</div>} />
+            </Card>
+            <WhiteSpace />
+            <p>评论</p>
+            <div style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size='large' />
+            </div>
+            {comments.map(c => (
+              <Card key={c.user}>
+                <Card.Header
+                  title={c.user}
+                  thumb={c.thumb}
+                />
+                <Card.Body>
+                  <p>{c.content}</p>
+                </Card.Body>
+              </Card>
+            ))}
+            <div style={commentStyle}>
+              <div style={{ flex: 10 }}>
+                <TextareaItem
+                  rows={1}
+                  placeholder='留言'
+                />
+              </div>
+              <div style={{ flex: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Button type='ghost' size='small' inline>发送</Button>
+              </div>
+            </div>
+          </WingBlank>
+        </div>
       </Mask>
+      <SearchBar />
+      <div style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size='large' />
+      </div>
       <WhiteSpace />
-      <WingBlank>
-        <Card onClick={showDetail} >
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-            extra={<span>50元</span>}
-          />
-          <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
-            <List.Item>
-            这这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列这本书用乐好久列本书用乐好久列
-            </List.Item>
-          </Card.Body>
-          <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
-        </Card>
-      </WingBlank>
-      <WhiteSpace />
-      <WingBlank>
-        <Card onClick={showDetail}>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-            extra={<span>50元</span>}
-          />
-          <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
-            <p>这本书用乐好久列</p>
-          </Card.Body>
-          <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
-        </Card>
-      </WingBlank>
-      <WhiteSpace />
-      <WingBlank>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-            extra={<span>50元</span>}
-          />
-          <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
-            <p>这本书用乐好久列</p>
-          </Card.Body>
-          <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
-        </Card>
-      </WingBlank>
-      <WhiteSpace />
-      <WingBlank>
-        <Card>
-          <Card.Header
-            title='用户名'
-            thumb={require('../../assets/images/default.png')}
-            extra={<span>50元</span>}
-          />
-          <Card.Body>
-            <img alt='用户名' src={require('../../assets/images/porter.jpg')} style={{ width: '20%' }} />
-            <p>这本书用乐好久列</p>
-          </Card.Body>
-          <Card.Footer content='重庆科技学院' extra={<div>评论10</div>} />
-        </Card>
-      </WingBlank>
+      {bookData.map(d => (
+        <WingBlank key={d.title}>
+          <Card onClick={() => showDetail({ user: d.user, title: d.title })} >
+            <Card.Header
+              title={d.title}
+              thumb={d.thumb}
+              extra={<span>{d.extra}</span>}
+            />
+            <Card.Body>
+              {d.imgs.map(img => (
+                <img alt='用户名' key={img} src={img} style={{ width: '20%' }} />
+              ))}
+              <List.Item>
+                {d.content}
+              </List.Item>
+            </Card.Body>
+            <Card.Footer content={d.location} extra={<div>评论{d.comment}</div>} />
+          </Card>
+          <WhiteSpace />
+        </WingBlank>
+      ))}
+      <div style={{ position: 'fixed', right: '4vw', bottom: '8vw', width: '20vw', height: '20vw' }}>
+        <Button type='ghost' inline>发帖</Button>
+      </div>
     </div>
   );
 };
 
-export default connect(({ app }) => ({ app }))(Book);
+export default connect(({ app, loading }) => ({ app, loading: loading.global }))(Book);

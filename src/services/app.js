@@ -19,3 +19,23 @@ export function signup(params) {
     data: params
   });
 }
+
+export function getcomments(params) {
+  return request('/api/comments', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    params
+  });
+}
+
+export function getbook(params) {
+  return request('/api/book', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    params
+  });
+}
