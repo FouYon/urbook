@@ -8,6 +8,7 @@ class Mask extends React.Component {
     const maskClass = classnames({
       'mask-hide': !this.props.visible
     });
+    document.body.style.overflow = this.props.visible ? 'hidden' : 'scroll';
     return (
       <div className={styles.mask + ' ' + maskClass}>
         {this.props.children}
