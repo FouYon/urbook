@@ -72,7 +72,7 @@ const Book = ({ app, dispatch, loading }) => {
                   placeholder='留言'
                 />
               </div>
-              <div style={{ flex: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div style={{ flex: 4, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Button type='ghost' size='small' inline>发送</Button>
               </div>
             </div>
