@@ -105,7 +105,7 @@ const Book = ({ app, dispatch, loading }) => {
           <WhiteSpace />
         </WingBlank>
       ))}
-      <div style={{ position: 'fixed', right: '4vw', bottom: '8vw', width: '20vw', height: '20vw' }}>
+      <div style={{ position: 'fixed', right: '30px', bottom: '120px', background: 'white' }}>
         <Button type='ghost' inline>发帖</Button>
       </div>
     </div>
