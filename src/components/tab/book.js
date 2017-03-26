@@ -55,16 +55,21 @@ const Book = ({ app, dispatch, loading }) => {
               <ActivityIndicator size='large' />
             </div>
             {comments.map(c => (
-              <Card key={c.user}>
-                <Card.Header
-                  title={c.user}
-                  thumb={c.thumb}
-                />
-                <Card.Body>
-                  <p>{c.content}</p>
-                </Card.Body>
-              </Card>
+              <div>
+                <WhiteSpace />
+                <Card key={c.user + c.title}>
+                  <Card.Header
+                    title={c.user}
+                    thumb={c.thumb}
+                  />
+                  <Card.Body>
+                    <p>{c.content}</p>
+                  </Card.Body>
+                </Card>
+                <WhiteSpace />
+              </div>
             ))}
+            <WhiteSpace style={{ height: '120px' }} />
             <div style={commentStyle}>
               <div style={{ flex: 10 }}>
                 <TextareaItem
@@ -85,7 +90,7 @@ const Book = ({ app, dispatch, loading }) => {
       </div>
       <WhiteSpace />
       {bookData.map(d => (
-        <WingBlank key={d.title}>
+        <WingBlank key={d.user + d.title}>
           <Card onClick={() => showDetail({ user: d.user, title: d.title })} >
             <Card.Header
               title={d.title}
@@ -105,6 +110,7 @@ const Book = ({ app, dispatch, loading }) => {
           <WhiteSpace />
         </WingBlank>
       ))}
+      <WhiteSpace style={{ height: '120px' }} />
       <div style={{ position: 'fixed', right: '30px', bottom: '120px', background: 'white' }}>
         <Button type='ghost' inline>发帖</Button>
       </div>

@@ -4,7 +4,7 @@
     "start": "nodemon app.js &! roadhog server",
     "build": "roadhog build && cp -a dist/* static",
     "test": "roadhog test",
-    "push": "git add . && git commit -m 'update' && git push"
+    "push": "npm run build && git add . && git commit -m 'update' && git push"
   },
   "dependencies": {
     "antd": "^2.6.4",
