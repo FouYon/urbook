@@ -6,11 +6,11 @@ import Mask from '../../components/mask';
 
 const Item = List.Item;
 
-var name = '';
-var brief = '';
+var uname = '';
+var ubrief = '';
 const User = ({ dispatch, app, user, loading }) => {
   const { showMask } = app;
-  const { files } = user;
+  const { files, name, brief, avator } = user;
   const logoutProp = {
     onClick() {
       dispatch({ type: 'app/logout' });
@@ -20,7 +20,8 @@ const User = ({ dispatch, app, user, loading }) => {
     dispatch({ type: 'user/updateUser', payload: { files } });
   };
   const update = () => {
-    dispatch({ type: 'user/updateuser', payload: { files, name, brief } });
+    dispatch({ type: 'user/updateuser', payload: { files, name: uname, brief: ubrief } });
+    dispatch({ type: 'user/getuser' });
   };
   return (
     <div>
@@ -41,11 +42,11 @@ const User = ({ dispatch, app, user, loading }) => {
             <InputItem
               clear
               autoFocus
-              onChange={(val) => (name = val)}
+              onChange={(val) => (uname = val)}
             >用户名</InputItem>
             <InputItem
               clear
-              onChange={(val) => (brief = val)}
+              onChange={(val) => (ubrief = val)}
             >简介</InputItem>
             <Item>头像</Item>
             <ImagePicker
@@ -55,18 +56,18 @@ const User = ({ dispatch, app, user, loading }) => {
             />
           </List>
           <WingBlank>
-            <Button type='primary' onClick={update} disabled={!(name && brief && files.length)}>更新</Button>
+            <Button type='primary' onClick={update} disabled={!(uname && ubrief && files.length)}>更新</Button>
           </WingBlank>
         </div>
       </Mask>
       <Card full>
         <Card.Header
-          title={<div style={{ marginLeft: '30px' }}>用户名</div>}
-          thumb={require('../../assets/images/porter.jpg')}
-          thumbStyle={{ width: '200px' }}
+          title={<div style={{ marginLeft: '30px' }}>{name}</div>}
+          thumb={avator}
+          thumbStyle={{ width: '200px', height: '200px', backgroundSize: 'cover' }}
         />
         <Card.Body>
-          <div>用用户简介用户简介用户用户简介用户简介用户简介用户简介户简介</div>
+          <div>{brief}</div>
         </Card.Body>
       </Card>
       <WhiteSpace />

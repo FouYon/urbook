@@ -1,6 +1,6 @@
 /* global localStorage, window */
 import { Toast } from 'antd-mobile';
-import { updateuser } from '../services/user';
+import { updateuser, getuser } from '../services/user';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
 
@@ -9,7 +9,8 @@ export default {
   state: {
     name: '',
     brief: '',
-    files: []
+    files: [],
+    avator: ''
   },
   effects: {
     *updateuser({ payload }, { call, put }) {
@@ -22,6 +23,16 @@ export default {
       const { data } = yield call(updateuser, postData);
       if (data.message) {
         yield put({ type: 'updateSuccess', payload: data });
+      } else {
+        yield put({ type: 'updateFail', payload: data });
+      }
+    },
+    *getuser({ payload }, { call, put }) {
+      const phone = localStorage.getItem('phone');
+      const { data } = yield call(getuser, { phone });
+      const { name, brief, avator } = data.data;
+      if (data.message) {
+        yield put({ type: 'updateUser', payload: { name, brief, avator } });
       } else {
         yield put({ type: 'updateFail', payload: data });
       }

@@ -9,3 +9,13 @@ export function updateuser(params) {
     data: params
   });
 }
+
+export function getuser(params) {
+  return request('/api/user', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    params
+  });
+}

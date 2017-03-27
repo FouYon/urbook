@@ -16,3 +16,14 @@ module.exports.post = (req, res) => {
       return res.json({ error: getError(err) });
     });
 };
+
+module.exports.get = (req, res) => {
+  const { phone } = req.query;
+  User.findOne({ phone })
+    .then(doc => {
+      return res.json({ message: 'success', data: doc });
+    })
+    .catch(err => {
+      return res.json({ error: getError(err) });
+    });
+};

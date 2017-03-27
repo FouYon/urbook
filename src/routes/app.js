@@ -77,6 +77,7 @@ const App = ({ app, dispatch }) => {
           selected={selected === 4}
           onPress={() => {
             dispatch({ type: 'app/switchTabBar', payload: { selected: 4 } });
+            dispatch({ type: 'user/getuser' });
           }}
         >
           <User {...userProp} />

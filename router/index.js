@@ -23,6 +23,7 @@ router
   .get('/api/book', Book.get);
 
 router
+  .get('/api/user', User.get)
   .post('/api/user', User.post);
 
 router
