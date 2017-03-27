@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'dva';
-import { ActivityIndicator, Button, TextareaItem, SearchBar, List, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
+import { createTooltip, Slider, ImagePicker, TextareaItem, List, InputItem, ActivityIndicator, Button, SearchBar, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
 import Mask from '../../components/mask';
 
+const Item = List.Item;
+const TipSlider = createTooltip(Slider);
 const Book = ({ app, dispatch, loading }) => {
-  const { showMask, bookData, cur, comments } = app;
+  var { title, content, price, postfiles } = app;
+  const { showPost, showMask, bookData, cur, comments } = app;
   const commentStyle = {
     display: 'flex',
     position: 'fixed',
@@ -18,6 +21,15 @@ const Book = ({ app, dispatch, loading }) => {
     dispatch({ type: 'app/getcomments', payload: { user, title } });
     dispatch({ type: 'app/showMask' });
     dispatch({ type: 'app/updateCur', payload: { user, title } });
+  };
+  const post = () => {
+    dispatch({ type: 'app/post', payload: { title, content, price, postfiles } });
+  };
+  const changePostImages = (files) => {
+    dispatch({ type: 'app/changePostImages', payload: { postfiles: files, title, content, price } });
+  };
+  const updatePrice = (val) => {
+    dispatch({ type: 'app/updatePrice', payload: { price: val, postfiles, title, content } });
   };
   return (
     <div>
@@ -54,9 +66,9 @@ const Book = ({ app, dispatch, loading }) => {
             <WhiteSpace />
             <p>评论</p>
             {comments.map(c => (
-              <div>
+              <div key={c.user + c.title}>
                 <WhiteSpace />
-                <Card key={c.user + c.title}>
+                <Card>
                   <Card.Header
                     title={c.user}
                     thumb={c.thumb}
@@ -80,6 +92,44 @@ const Book = ({ app, dispatch, loading }) => {
                 <Button type='ghost' size='small' inline>发送</Button>
               </div>
             </div>
+          </WingBlank>
+        </div>
+      </Mask>
+      <Mask visible={showPost}>
+        <div style={{ height: '100vh', overflow: 'scroll', width: '100%' }}>
+          <NavBar
+            style={{ position: 'fixed', height: '100px', width: '100%', zIndex: '100' }}
+            leftContent='返回'
+            mode='light'
+            onLeftClick={() => {
+              dispatch({ type: 'app/hidePost' });
+            }}
+          />
+          <WhiteSpace style={{ height: '120px' }} />
+          <WingBlank>
+            <List>
+              <InputItem
+                clear
+                maxLength={15}
+                onChange={(val) => (title = val)}
+                name='postclear'
+              >书名</InputItem>
+              <TextareaItem
+                rows={3}
+                placeholder='描述一下你的书吧'
+                onChange={(val) => (content = val)}
+                name='postclear'
+              />
+              <Item>价格({price}元)</Item>
+              <TipSlider defaultValue={10} min={0} value={price} max={100} onChange={updatePrice} />
+              <Item>图片</Item>
+              <ImagePicker
+                files={postfiles}
+                selectable={postfiles.length < 3}
+                onChange={changePostImages}
+              />
+            </List>
+            <Button type='primary' onClick={post}>发送</Button>
           </WingBlank>
         </div>
       </Mask>
@@ -108,7 +158,7 @@ const Book = ({ app, dispatch, loading }) => {
       ))}
       <WhiteSpace style={{ height: '120px' }} />
       <div style={{ position: 'fixed', right: '30px', bottom: '120px', background: 'white' }}>
-        <Button type='ghost' inline>发帖</Button>
+        <Button type='ghost' inline onClick={() => dispatch({ type: 'app/showPost' })}>发帖</Button>
       </div>
     </div>
   );

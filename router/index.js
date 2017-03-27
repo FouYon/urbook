@@ -4,6 +4,7 @@ const Signup = require('./api/signup');
 const Comments = require('./api/comments.js');
 const Book = require('./api/book.js');
 const User = require('./api/user.js');
+const Post = require('./api/post');
 
 module.exports = router;
 
@@ -27,9 +28,7 @@ router
   .post('/api/user', User.post);
 
 router
-  .get('/api/foo', (req, res) => {
-    if (req.error) return res.json({ error: req.error });
-    res.json({ message: '验证成功' });
-  });
+  .get('/api/post', Post.get)
+  .post('/api/post', Post.post);
 
 router.get('*', (req, res) => res.redirect('/'));

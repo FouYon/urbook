@@ -1,4 +1,4 @@
-/* global localStorage, window */
+/* global localStorage, window, document */
 import { Toast } from 'antd-mobile';
 import { updateuser, getuser } from '../services/user';
 
@@ -47,8 +47,13 @@ export default {
     },
     updateSuccess(state, { payload }) {
       Toast.success(payload.message, ERROR_MSG_DURATION);
+      const clears = document.getElementsByName('clear');
+      clears.forEach((el) => {
+        el.value = '';
+      });
       return {
-        ...state
+        ...state,
+        files: []
       };
     },
     updateFail(state, { payload }) {

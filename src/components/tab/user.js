@@ -41,12 +41,13 @@ const User = ({ dispatch, app, user, loading }) => {
           <List>
             <InputItem
               clear
-              autoFocus
               onChange={(val) => (uname = val)}
+              name='clear'
             >用户名</InputItem>
             <InputItem
               clear
               onChange={(val) => (ubrief = val)}
+              name='clear'
             >简介</InputItem>
             <Item>头像</Item>
             <ImagePicker
@@ -64,7 +65,7 @@ const User = ({ dispatch, app, user, loading }) => {
         <Card.Header
           title={<div style={{ marginLeft: '30px' }}>{name}</div>}
           thumb={avator}
-          thumbStyle={{ width: '200px', height: '200px', backgroundSize: 'cover' }}
+          thumbStyle={{ width: '200px', height: '200px' }}
         />
         <Card.Body>
           <div>{brief}</div>

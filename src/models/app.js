@@ -1,6 +1,6 @@
-/* global localStorage, window */
+/* global localStorage, window, document */
 import { Toast } from 'antd-mobile';
-import { login, signup, getcomments, getbook } from '../services/app';
+import { login, signup, getcomments, getbook, post } from '../services/app';
 import { axios } from '../utils/request';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
@@ -15,9 +15,14 @@ export default {
     },
     selected: 1,
     showMask: false,
+    showPost: false,
     bookData: [],
     cur: {},
-    comments: []
+    comments: [],
+    title: '',
+    content: '',
+    price: 10,
+    postfiles: []
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -88,9 +93,43 @@ export default {
           payload: { error: data.error }
         });
       }
+    },
+    *post({ payload }, { call, put }) {
+      const postData = payload;
+      postData.postBy = localStorage.getItem('phone');
+      const { data } = yield call(post, payload);
+      if (data.message) {
+        yield put({ type: 'postSuccess', payload: postData });
+        yield put({ type: 'getbook' });
+      } else {
+        yield put({ type: 'postFail', payload: { error: data.error } });
+      }
     }
   },
   reducers: {
+    updatePrice(state, { payload }) {
+      return {
+        ...state,
+        ...payload
+      };
+    },
+    postSuccess(state) {
+      Toast.success('发布成功', ERROR_MSG_DURATION);
+      document.getElementsByName('postclear').forEach((e) => (e.value = ''));
+      return {
+        ...state,
+        title: '',
+        content: '',
+        postfiles: [],
+        price: 10
+      };
+    },
+    postFail(state, { payload }) {
+      Toast.fail(payload.error, ERROR_MSG_DURATION);
+      return {
+        ...state
+      };
+    },
     showLogin(state) {
       return {
         ...state,
@@ -182,6 +221,18 @@ export default {
         showMask: false
       };
     },
+    showPost(state) {
+      return {
+        ...state,
+        showPost: true
+      };
+    },
+    hidePost(state) {
+      return {
+        ...state,
+        showPost: false
+      };
+    },
     updateComments(state, { payload }) {
       return {
         ...state,
@@ -204,6 +255,12 @@ export default {
       Toast.fail(payload.error, ERROR_MSG_DURATION);
       return {
         ...state
+      };
+    },
+    changePostImages(state, { payload }) {
+      return {
+        ...state,
+        ...payload
       };
     }
   }

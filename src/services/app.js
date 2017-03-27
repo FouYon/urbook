@@ -49,3 +49,13 @@ export function updateuser(params) {
     data: params
   });
 }
+
+export function post(params) {
+  return request('/api/post', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: params
+  });
+}
