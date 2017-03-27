@@ -17,7 +17,9 @@ app.use(express.static(path.resolve('./static')));
 app.use('/mongo', mongoExpress(mongoExpressConfig));
 
 app.use(compression());
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  limit: '1mb'
+}));
 app.use(bodyParser.urlencoded({
   extended: true
 }));

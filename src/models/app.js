@@ -113,6 +113,7 @@ export default {
     },
     loginSuccess(state, { payload }) {
       if (payload.tokenLogin) {
+        localStorage.setItem('phone', payload.phone);
         return {
           ...state,
           user: { phone: payload.phone },
@@ -123,6 +124,7 @@ export default {
         Toast.success('登录成功', ERROR_MSG_DURATION);
         axios.defaults.headers.common.Authorization = 'Bearer ' + payload.token;
         localStorage.setItem('jwttoken', payload.token);
+        localStorage.setItem('phone', payload.user.phone);
         return {
           ...state,
           ...payload,
@@ -160,12 +162,17 @@ export default {
         ...state
       };
     },
-    showMask(state, { payload }) {
+    updateCur(state, { payload }) {
       const { user, title } = payload;
       const cur = state.bookData.find(d => d.user === user && d.title === title);
       return {
         ...state,
-        cur,
+        cur
+      };
+    },
+    showMask(state) {
+      return {
+        ...state,
         showMask: true
       };
     },

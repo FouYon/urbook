@@ -25,7 +25,7 @@ module.exports.get = (req, res) => {
       comment: '20'
     },
     {
-      user: '123',
+      user: 'a123',
       title: '计算机组成原理',
       thumb: 'images/default.png',
       extra: '50元',
@@ -35,7 +35,7 @@ module.exports.get = (req, res) => {
       comment: '10'
     },
     {
-      user: '234',
+      user: 'a234',
       title: '数据结构',
       thumb: 'images/default.png',
       extra: '20元',

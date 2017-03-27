@@ -3,6 +3,7 @@ const Login = require('./api/login');
 const Signup = require('./api/signup');
 const Comments = require('./api/comments.js');
 const Book = require('./api/book.js');
+const User = require('./api/user.js');
 
 module.exports = router;
 
@@ -20,6 +21,9 @@ router
 
 router
   .get('/api/book', Book.get);
+
+router
+  .post('/api/user', User.post);
 
 router
   .get('/api/foo', (req, res) => {

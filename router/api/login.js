@@ -19,7 +19,7 @@ module.exports.post = (req, res) => {
         if (!doc) return res.status(200).json({ error: '用户未注册' });
         else {
           const token = jwt.sign({ phone: doc.phone }, 'jwt', { expiresIn: '1h' });
-          return res.status(200).json({ message: '登录成功', token });
+          return res.status(200).json({ message: '登录成功', token, phone });
         }
       })
       .catch(err => {

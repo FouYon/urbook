@@ -16,10 +16,12 @@ const Book = ({ app, dispatch, loading }) => {
   };
   const showDetail = ({ user, title }) => {
     dispatch({ type: 'app/getcomments', payload: { user, title } });
-    dispatch({ type: 'app/showMask', payload: { user, title } });
+    dispatch({ type: 'app/showMask' });
+    dispatch({ type: 'app/updateCur', payload: { user, title } });
   };
   return (
     <div>
+      <ActivityIndicator animating={loading} toast size='large' />
       <Mask visible={showMask}>
         <div style={{ height: '100vh', overflow: 'scroll', width: '100%' }}>
           <NavBar
@@ -51,13 +53,10 @@ const Book = ({ app, dispatch, loading }) => {
             </Card>
             <WhiteSpace />
             <p>评论</p>
-            <div style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
-              <ActivityIndicator size='large' />
-            </div>
-            {comments.map((c, idx) => (
+            {comments.map(c => (
               <div>
                 <WhiteSpace />
-                <Card key={c.user + c.title + idx}>
+                <Card key={c.user + c.title}>
                   <Card.Header
                     title={c.user}
                     thumb={c.thumb}
@@ -85,12 +84,9 @@ const Book = ({ app, dispatch, loading }) => {
         </div>
       </Mask>
       <SearchBar />
-      <div style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size='large' />
-      </div>
       <WhiteSpace />
-      {bookData.map((d, idx) => (
-        <WingBlank key={d.user + d.title + idx}>
+      {bookData.map(d => (
+        <WingBlank key={d.user + d.title}>
           <Card onClick={() => showDetail({ user: d.user, title: d.title })} >
             <Card.Header
               title={d.title}
