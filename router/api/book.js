@@ -11,7 +11,7 @@ module.exports.get = (req, res) => {
         return {
           user: el.postBy,
           title: el.title,
-          thumb: 'images/default.png',
+          thumb: `images/${el.postBy}`,
           extra: `${el.price}元`,
           imgs: el.imgs,
           content: el.content,

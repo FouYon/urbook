@@ -49,6 +49,7 @@ const Book = ({ app, dispatch, loading }) => {
               <Card.Header
                 title={cur.title}
                 thumb={cur.thumb}
+                thumbStyle={{ width: '60px', height: '60px' }}
                 extra={<span>{cur.extra}</span>}
               />
               <Card.Body>
@@ -141,6 +142,7 @@ const Book = ({ app, dispatch, loading }) => {
             <Card.Header
               title={d.title}
               thumb={d.thumb}
+              thumbStyle={{ width: '60px', height: '60px' }}
               extra={<span>{d.extra}</span>}
             />
             <Card.Body>

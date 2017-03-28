@@ -5,6 +5,7 @@ const Comments = require('./api/comments.js');
 const Book = require('./api/book.js');
 const User = require('./api/user.js');
 const Post = require('./api/post');
+const Image = require('./images.js');
 
 module.exports = router;
 
@@ -30,5 +31,8 @@ router
 router
   .get('/api/post', Post.get)
   .post('/api/post', Post.post);
+
+router
+  .get('/images/:params', Image.get);
 
 router.get('*', (req, res) => res.redirect('/'));
