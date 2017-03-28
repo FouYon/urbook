@@ -18,7 +18,7 @@ module.exports.get = (req, res) => {
           location: el.location,
           comment: 10
         };
-      });
+      }).reverse();
       return res.json({ message: 'success', data });
     })
     .catch(err => {

@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { createTooltip, Slider, ImagePicker, TextareaItem, List, InputItem, ActivityIndicator, Button, SearchBar, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
+import { Slider, ImagePicker, TextareaItem, List, InputItem, ActivityIndicator, Button, SearchBar, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
 import Mask from '../../components/mask';
 
 const Item = List.Item;
-const TipSlider = createTooltip(Slider);
 const Book = ({ app, dispatch, loading }) => {
-  var { title, content, price, postfiles } = app;
-  const { showPost, showMask, bookData, cur, comments } = app;
+  const { title, content, price, postfiles, showPost, showMask, bookData, cur, comments } = app;
   const commentStyle = {
     display: 'flex',
     position: 'fixed',
@@ -26,10 +24,10 @@ const Book = ({ app, dispatch, loading }) => {
     dispatch({ type: 'app/post', payload: { title, content, price, postfiles } });
   };
   const changePostImages = (files) => {
-    dispatch({ type: 'app/changePostImages', payload: { postfiles: files, title, content, price } });
+    dispatch({ type: 'app/changePostImages', payload: { postfiles: files } });
   };
   const updatePrice = (val) => {
-    dispatch({ type: 'app/updatePrice', payload: { price: val, postfiles, title, content } });
+    dispatch({ type: 'app/updatePrice', payload: { price: val } });
   };
   return (
     <div>
@@ -111,25 +109,27 @@ const Book = ({ app, dispatch, loading }) => {
               <InputItem
                 clear
                 maxLength={15}
-                onChange={(val) => (title = val)}
+                value={title}
+                onChange={(val) => dispatch({ type: 'app/updateTitle', payload: { title: val } })}
                 name='postclear'
               >书名</InputItem>
               <TextareaItem
                 rows={3}
                 placeholder='描述一下你的书吧'
-                onChange={(val) => (content = val)}
+                value={content}
+                onChange={(val) => dispatch({ type: 'app/updateContent', payload: { content: val } })}
                 name='postclear'
               />
               <Item>价格({price}元)</Item>
-              <TipSlider defaultValue={10} min={0} value={price} max={100} onChange={updatePrice} />
+              <Slider defaultValue={10} min={0} value={price} max={100} onChange={updatePrice} />
               <Item>图片</Item>
               <ImagePicker
                 files={postfiles}
-                selectable={postfiles.length < 3}
+                selectable={postfiles.length < 5}
                 onChange={changePostImages}
               />
             </List>
-            <Button type='primary' onClick={post}>发送</Button>
+            <Button type='primary' disabled={!(title && content && postfiles.length)} onClick={post}>发送</Button>
           </WingBlank>
         </div>
       </Mask>

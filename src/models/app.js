@@ -113,6 +113,18 @@ export default {
         ...payload
       };
     },
+    updateTitle(state, { payload }) {
+      return {
+        ...state,
+        ...payload
+      };
+    },
+    updateContent(state, { payload }) {
+      return {
+        ...state,
+        ...payload
+      };
+    },
     postSuccess(state) {
       Toast.success('发布成功', ERROR_MSG_DURATION);
       document.getElementsByName('postclear').forEach((e) => (e.value = ''));
