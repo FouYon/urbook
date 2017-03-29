@@ -9,8 +9,7 @@ var phone = '';
 var password = '';
 var chckpass = '';
 const Login = ({
-  dispatch,
-  form: { getFieldProps }
+  dispatch
 }) => {
   const loginProp = {
     onClick() {
@@ -27,30 +26,18 @@ const Login = ({
       <WhiteSpace />
       <List renderHeader={() => '注册'}>
         <InputItem
-          {...getFieldProps('phone', {
-            onChange(val) {
-              phone = val;
-            }
-          })}
+          onChange={(val) => (phone = val)}
           clear
           type='phone'
           placeholder='186 1234 1234'
         >手机号码</InputItem>
         <InputItem
-          {...getFieldProps('password', {
-            onChange(val) {
-              password = val;
-            }
-          })}
+          onChange={(val) => (password = val)}
           type='password'
           placeholder='****'
         >密码</InputItem>
         <InputItem
-          {...getFieldProps('chckpass', {
-            onChange(val) {
-              chckpass = val;
-            }
-          })}
+          onChange={(val) => (chckpass = val)}
           type='password'
           placeholder='****'
         >确认密码</InputItem>

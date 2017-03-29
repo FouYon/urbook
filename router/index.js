@@ -35,4 +35,4 @@ router
 router
   .get('/images/:params', Image.get);
 
-router.get('*', (req, res) => res.redirect('/'));
+// router.get('*', (req, res) => res.redirect('/'));

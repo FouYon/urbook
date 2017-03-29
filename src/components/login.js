@@ -5,8 +5,7 @@ import { createForm } from 'rc-form';
 var phone = '';
 var password = '';
 const Login = ({
-  dispatch,
-  form: { getFieldProps }
+  dispatch
 }) => {
   const loginProp = {
     onClick() {
@@ -23,21 +22,17 @@ const Login = ({
       <WhiteSpace />
       <List renderHeader={() => '登录'}>
         <InputItem
-          {...getFieldProps('phone', {
-            onChange(val) {
-              phone = val;
-            }
-          })}
+          onChange={(val) => {
+            phone = val;
+          }}
           clear
           type='phone'
           placeholder='186 1234 1234'
         >手机号码</InputItem>
         <InputItem
-          {...getFieldProps('password', {
-            onChange(val) {
-              password = val;
-            }
-          })}
+          onChange={(val) => {
+            password = val;
+          }}
           type='password'
           placeholder='****'
         >密码</InputItem>

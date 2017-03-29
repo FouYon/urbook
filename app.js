@@ -18,7 +18,7 @@ app.use('/mongo', mongoExpress(mongoExpressConfig));
 
 app.use(compression());
 app.use(bodyParser.json({
-  limit: '100mb'
+  limit: '10mb'
 }));
 app.use(bodyParser.urlencoded({
   extended: true

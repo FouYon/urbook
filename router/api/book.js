@@ -13,7 +13,7 @@ module.exports.get = (req, res) => {
           title: el.title,
           thumb: `images/${el.postBy}`,
           extra: `${el.price}元`,
-          imgs: el.imgs,
+          imgs: el.imgs.map((img, idx) => `/images/${el.postBy}?title=${el.title}&id=${idx}`),
           content: el.content,
           location: el.location,
           comment: 10

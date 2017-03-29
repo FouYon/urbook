@@ -41,7 +41,9 @@ const User = ({ dispatch, app, user, loading }) => {
           <List>
             <InputItem
               clear
-              onChange={(val) => (uname = val)}
+              onChange={(val) => {
+                uname = val;
+              }}
               name='clear'
             >用户名</InputItem>
             <InputItem
@@ -102,5 +104,7 @@ const User = ({ dispatch, app, user, loading }) => {
     </div>
   );
 };
+
+User.contextTypes = { foo: React.PropTypes.string };
 
 export default connect(({ app, user, loading }) => ({ app, user, loading: loading.global }))(User);

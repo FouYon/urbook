@@ -21,6 +21,7 @@ module.exports.get = (req, res) => {
   const { phone } = req.query;
   User.findOne({ phone })
     .then(doc => {
+      doc.avator = `images/${doc.phone}`;
       return res.json({ message: 'success', data: doc });
     })
     .catch(err => {
