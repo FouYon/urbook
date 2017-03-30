@@ -1,28 +1,28 @@
-import React from 'react';
-import { ActivityIndicator, ImagePicker, InputItem, NavBar, List, Button, WingBlank, WhiteSpace, Card, Icon } from 'antd-mobile';
-import { connect } from 'dva';
-import styles from './user.less';
-import Mask from '../../components/mask';
+import React from 'react'
+import { ActivityIndicator, ImagePicker, InputItem, NavBar, List, Button, WingBlank, WhiteSpace, Card, Icon } from 'antd-mobile'
+import { connect } from 'dva'
+import styles from './user.less'
+import Mask from '../../components/mask'
 
-const Item = List.Item;
+const Item = List.Item
 
-var uname = '';
-var ubrief = '';
+var uname = ''
+var ubrief = ''
 const User = ({ dispatch, app, user, loading }) => {
-  const { showMask } = app;
-  const { files, name, brief, avator } = user;
+  const { showMask } = app
+  const { files, name, brief, avator } = user
   const logoutProp = {
     onClick() {
-      dispatch({ type: 'app/logout' });
+      dispatch({ type: 'app/logout' })
     }
-  };
+  }
   const changeImage = (files) => {
-    dispatch({ type: 'user/updateUser', payload: { files } });
-  };
+    dispatch({ type: 'user/updateUser', payload: { files } })
+  }
   const update = () => {
-    dispatch({ type: 'user/updateuser', payload: { files, name: uname, brief: ubrief } });
-    dispatch({ type: 'user/getuser' });
-  };
+    dispatch({ type: 'user/updateuser', payload: { files, name: uname, brief: ubrief } })
+    dispatch({ type: 'user/getuser' })
+  }
   return (
     <div>
       <ActivityIndicator
@@ -42,7 +42,7 @@ const User = ({ dispatch, app, user, loading }) => {
             <InputItem
               clear
               onChange={(val) => {
-                uname = val;
+                uname = val
               }}
               name='clear'
             >用户名</InputItem>
@@ -102,9 +102,9 @@ const User = ({ dispatch, app, user, loading }) => {
         <Button type='warning' {...logoutProp}>退出登录</Button>
       </WingBlank>
     </div>
-  );
-};
+  )
+}
 
-User.contextTypes = { foo: React.PropTypes.string };
+User.contextTypes = { foo: React.PropTypes.string }
 
-export default connect(({ app, user, loading }) => ({ app, user, loading: loading.global }))(User);
+export default connect(({ app, user, loading }) => ({ app, user, loading: loading.global }))(User)

@@ -1,4 +1,4 @@
-import { request } from '../utils';
+import { request } from '../utils'
 
 export function login(params) {
   return request('/api/login', {
@@ -7,7 +7,7 @@ export function login(params) {
       'Content-Type': 'application/json'
     },
     data: params
-  });
+  })
 }
 
 export function signup(params) {
@@ -17,7 +17,7 @@ export function signup(params) {
       'Content-Type': 'application/json'
     },
     data: params
-  });
+  })
 }
 
 export function getcomments(params) {
@@ -27,7 +27,7 @@ export function getcomments(params) {
       'Content-Type': 'application/json'
     },
     params
-  });
+  })
 }
 
 export function getbook(params) {
@@ -37,7 +37,7 @@ export function getbook(params) {
       'Content-Type': 'application/json'
     },
     params
-  });
+  })
 }
 
 export function updateuser(params) {
@@ -47,7 +47,7 @@ export function updateuser(params) {
       'Content-Type': 'application/json'
     },
     data: params
-  });
+  })
 }
 
 export function post(params) {
@@ -57,5 +57,15 @@ export function post(params) {
       'Content-Type': 'application/json'
     },
     data: params
-  });
+  })
+}
+
+export function postcomment(params) {
+  return request('/api/comment', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: params
+  })
 }

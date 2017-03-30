@@ -1,11 +1,12 @@
-import React from 'react';
-import { connect } from 'dva';
-import { Slider, ImagePicker, TextareaItem, List, InputItem, ActivityIndicator, Button, SearchBar, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile';
-import Mask from '../../components/mask';
+import React from 'react'
+import { connect } from 'dva'
+import { Slider, ImagePicker, TextareaItem, List, InputItem, ActivityIndicator, Button, SearchBar, NavBar, WhiteSpace, WingBlank, Card, Icon } from 'antd-mobile'
+import Mask from '../../components/mask'
 
-const Item = List.Item;
+var comment = ''
+const Item = List.Item
 const Book = ({ app, dispatch, loading }) => {
-  const { title, content, price, postfiles, showPost, showMask, bookData, cur, comments } = app;
+  const { title, content, price, postfiles, showPost, showMask, bookData, cur, comments } = app
   const commentStyle = {
     display: 'flex',
     position: 'fixed',
@@ -14,21 +15,24 @@ const Book = ({ app, dispatch, loading }) => {
     width: '100vw',
     zIndex: 300,
     background: 'white'
-  };
+  }
   const showDetail = ({ user, title }) => {
-    dispatch({ type: 'app/getcomments', payload: { user, title } });
-    dispatch({ type: 'app/showMask' });
-    dispatch({ type: 'app/updateCur', payload: { user, title } });
-  };
+    dispatch({ type: 'app/getcomments', payload: { user, title } })
+    dispatch({ type: 'app/showMask' })
+    dispatch({ type: 'app/updateCur', payload: { user, title } })
+  }
   const post = () => {
-    dispatch({ type: 'app/post', payload: { title, content, price, postfiles } });
-  };
+    dispatch({ type: 'app/post', payload: { title, content, price, postfiles } })
+  }
   const changePostImages = (files) => {
-    dispatch({ type: 'app/changePostImages', payload: { postfiles: files } });
-  };
+    dispatch({ type: 'app/changePostImages', payload: { postfiles: files } })
+  }
   const updatePrice = (val) => {
-    dispatch({ type: 'app/updatePrice', payload: { price: val } });
-  };
+    dispatch({ type: 'app/updatePrice', payload: { price: val } })
+  }
+  const postComment = () => {
+    dispatch({ type: 'app/postcomment', payload: { title: cur.title, user: cur.user, comment } })
+  }
   return (
     <div>
       <ActivityIndicator animating={loading} toast size='large' />
@@ -40,7 +44,7 @@ const Book = ({ app, dispatch, loading }) => {
             rightContent={<Icon type={require('../../assets/like-1.svg')} onClick={() => console.log('clickme')} />}
             mode='light'
             onLeftClick={() => {
-              dispatch({ type: 'app/hideMask' });
+              dispatch({ type: 'app/hideMask' })
             }}
           />
           <WhiteSpace style={{ height: '120px' }} />
@@ -60,17 +64,18 @@ const Book = ({ app, dispatch, loading }) => {
                   {cur.content}
                 </List.Item>
               </Card.Body>
-              <Card.Footer content={cur.location} extra={<div>评论{cur.comment}</div>} />
+              <Card.Footer content={cur.location} extra={<div>评论{cur.comment ? cur.comment.length : 0}</div>} />
             </Card>
             <WhiteSpace />
             <p>评论</p>
             {comments.map(c => (
-              <div key={c.user + c.title}>
+              <div key={c.user + c.content + c.at}>
                 <WhiteSpace />
                 <Card>
                   <Card.Header
                     title={c.user}
                     thumb={c.thumb}
+                    thumbStyle={{ width: '60px', height: '60px' }}
                   />
                   <Card.Body>
                     <p>{c.content}</p>
@@ -85,10 +90,12 @@ const Book = ({ app, dispatch, loading }) => {
                 <TextareaItem
                   rows={1}
                   placeholder='留言'
+                  name='commenttext'
+                  onChange={(val) => (comment = val)}
                 />
               </div>
               <div style={{ flex: 4, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button type='ghost' size='small' inline>发送</Button>
+                <Button type='ghost' size='small' inline onClick={postComment}>发送</Button>
               </div>
             </div>
           </WingBlank>
@@ -101,7 +108,7 @@ const Book = ({ app, dispatch, loading }) => {
             leftContent='返回'
             mode='light'
             onLeftClick={() => {
-              dispatch({ type: 'app/hidePost' });
+              dispatch({ type: 'app/hidePost' })
             }}
           />
           <WhiteSpace style={{ height: '120px' }} />
@@ -153,7 +160,7 @@ const Book = ({ app, dispatch, loading }) => {
                 {d.content}
               </List.Item>
             </Card.Body>
-            <Card.Footer content={d.location} extra={<div>评论{d.comment}</div>} />
+            <Card.Footer content={d.location} extra={<div>评论{d.comment.length}</div>} />
           </Card>
           <WhiteSpace />
         </WingBlank>
@@ -163,7 +170,7 @@ const Book = ({ app, dispatch, loading }) => {
         <Button type='ghost' inline onClick={() => dispatch({ type: 'app/showPost' })}>发帖</Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default connect(({ app, loading }) => ({ app, loading: loading.global }))(Book);
+export default connect(({ app, loading }) => ({ app, loading: loading.global }))(Book)

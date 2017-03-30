@@ -1,29 +1,31 @@
-// const path = require('path');
+const path = require('path')
 
-// const db = require(path.resolve('./lib/db'));
+const db = require(path.resolve('./lib/db'))
+const getError = db.getError
+const Post = db.model('Post')
 
 module.exports.get = (req, res) => {
-  const data = [
-    {
-      user: '123',
-      thumb: 'images/default.png',
-      content: '123'
-    },
-    {
-      user: '234',
-      thumb: 'images/default.png',
-      content: '234'
-    },
-    {
-      user: 'a123',
-      thumb: 'images/default.png',
-      content: 'a123'
-    },
-    {
-      user: '2b34',
-      thumb: 'images/default.png',
-      content: '2b34'
-    }
-  ];
-  return res.json({ message: '获取成功', data });
-};
+  const { user: postBy, title } = req.query
+  Post.findOne({ postBy, title })
+    .then(doc => {
+      const data = doc.comments.map(c => ({ user: c.commentBy, thumb: `images/${c.commentBy}`, content: c.content, at: c.commentAt }))
+      return res.json({ message: 'success', data })
+    })
+    .catch(err => {
+      return res.json({ error: getError(err) })
+    })
+}
+
+module.exports.post = (req, res) => {
+  const { title, user: postBy, comment, commentBy } = req.body
+  Post.updateOne({ title, postBy }, {
+    $push: { comments: { $each: [{ commentBy, content: comment }] } }
+  })
+    .then(() => {
+      return res.json({ message: '更新成功' })
+    })
+    .catch(err => {
+      console.log(err)
+      return res.json({ err: getError(err) })
+    })
+}

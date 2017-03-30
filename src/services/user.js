@@ -1,4 +1,4 @@
-import { request } from '../utils';
+import { request } from '../utils'
 
 export function updateuser(params) {
   return request('/api/user', {
@@ -7,7 +7,7 @@ export function updateuser(params) {
       'Content-Type': 'application/json'
     },
     data: params
-  });
+  })
 }
 
 export function getuser(params) {
@@ -17,5 +17,5 @@ export function getuser(params) {
       'Content-Type': 'application/json'
     },
     params
-  });
+  })
 }

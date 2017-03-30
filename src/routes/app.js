@@ -1,12 +1,12 @@
-import React from 'react';
-import { connect } from 'dva';
-import { TabBar, Icon } from 'antd-mobile';
-import Login from '../components/login';
-import Signup from '../components/signup';
-import User from '../components/tab/user';
-import Home from '../components/tab/home';
-import Book from '../components/tab/book';
-import Find from '../components/tab/find';
+import React from 'react'
+import { connect } from 'dva'
+import { TabBar, Icon } from 'antd-mobile'
+import Login from '../components/login'
+import Signup from '../components/signup'
+import User from '../components/tab/user'
+import Home from '../components/tab/home'
+import Book from '../components/tab/book'
+import Find from '../components/tab/find'
 
 /**
  * 第一个Object { app, children, dispatch, history, location, params }
@@ -17,14 +17,14 @@ import Find from '../components/tab/find';
  */
 
 const App = ({ app, dispatch }) => {
-  const { showLogin, showSignup, selected, user } = app;
-  const loginProp = { dispatch };
-  const signupProp = { dispatch };
-  const userProp = { dispatch };
+  const { showLogin, showSignup, selected, user } = app
+  const loginProp = { dispatch }
+  const signupProp = { dispatch }
+  const userProp = { dispatch }
   if (showLogin) {
-    return <Login {...loginProp} />;
+    return <Login {...loginProp} />
   } else if (showSignup) {
-    return <Signup {...signupProp} />;
+    return <Signup {...signupProp} />
   } else {
     return (
       <TabBar
@@ -39,7 +39,7 @@ const App = ({ app, dispatch }) => {
           selectedIcon={<Icon type={require('../assets/home-1.svg')} />}
           selected={selected === 1}
           onPress={() => {
-            dispatch({ type: 'app/switchTabBar', payload: { selected: 1 } });
+            dispatch({ type: 'app/switchTabBar', payload: { selected: 1 } })
           }}
         >
           <Home />
@@ -51,8 +51,8 @@ const App = ({ app, dispatch }) => {
           selectedIcon={<Icon type={require('../assets/notebook-5.svg')} />}
           selected={selected === 2}
           onPress={() => {
-            dispatch({ type: 'app/switchTabBar', payload: { selected: 2 } });
-            dispatch({ type: 'app/getbook', payload: { user } });
+            dispatch({ type: 'app/switchTabBar', payload: { selected: 2 } })
+            dispatch({ type: 'app/getbook', payload: { user } })
           }}
         >
           <Book />
@@ -64,7 +64,7 @@ const App = ({ app, dispatch }) => {
           selectedIcon={<Icon type={require('../assets/view.svg')} />}
           selected={selected === 3}
           onPress={() => {
-            dispatch({ type: 'app/switchTabBar', payload: { selected: 3 } });
+            dispatch({ type: 'app/switchTabBar', payload: { selected: 3 } })
           }}
         >
           <Find />
@@ -76,15 +76,15 @@ const App = ({ app, dispatch }) => {
           selectedIcon={<Icon type={require('../assets/user.svg')} />}
           selected={selected === 4}
           onPress={() => {
-            dispatch({ type: 'app/switchTabBar', payload: { selected: 4 } });
-            dispatch({ type: 'user/getuser' });
+            dispatch({ type: 'app/switchTabBar', payload: { selected: 4 } })
+            dispatch({ type: 'user/getuser' })
           }}
         >
           <User {...userProp} />
         </TabBar.Item>
       </TabBar>
-    );
+    )
   }
-};
+}
 
-export default connect(({ app, loading }) => ({ app, loading: loading.global }))(App);
+export default connect(({ app, loading }) => ({ app, loading: loading.global }))(App)

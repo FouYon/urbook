@@ -1,14 +1,14 @@
-import React from 'react';
-import { InputItem } from 'antd-mobile';
+import React from 'react'
+import { InputItem } from 'antd-mobile'
 
 class Foo extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { foo: '' };
+    super(props)
+    this.state = { foo: '' }
   }
 
   change(val) {
-    this.setState({ foo: val });
+    this.setState({ foo: val })
   }
 
   render() {
@@ -17,8 +17,8 @@ class Foo extends React.Component {
         <p>{this.state.foo}</p>
         <InputItem value={this.state.foo} onChange={this.change.bind(this)} />
       </div>
-    );
+    )
   }
 }
 
-export default Foo;
+export default Foo

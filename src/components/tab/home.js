@@ -1,7 +1,7 @@
-import React from 'react';
-import { Grid, WhiteSpace, WingBlank } from 'antd-mobile';
-import ImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
+import React from 'react'
+import { Grid, WhiteSpace, WingBlank } from 'antd-mobile'
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 const Home = () => {
   const images = [
@@ -14,11 +14,11 @@ const Home = () => {
     {
       original: 'images/book3.jpg'
     }
-  ];
+  ]
   const data1 = Array.from(new Array(9)).map(() => ({
     img: 'images/book.jpg',
     text: '数据结构'
-  }));
+  }))
   return (
     <div style={{ marginBottom: '120px' }}>
       <ImageGallery
@@ -47,7 +47,7 @@ const Home = () => {
         />
       </WingBlank>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

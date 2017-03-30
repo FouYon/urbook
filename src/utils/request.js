@@ -1,13 +1,13 @@
-import fetch from 'axios';
+import fetch from 'axios'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    return response
   }
 
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
+  const error = new Error(response.statusText)
+  error.response = response
+  throw error
 }
 
 /**
@@ -18,23 +18,23 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 
-export const axios = fetch;
+export const axios = fetch
 
 export async function request(url, options) {
-  const response = await fetch(url, options);
+  const response = await fetch(url, options)
 
-  checkStatus(response);
+  checkStatus(response)
 
-  const data = await response.data;
+  const data = await response.data
 
   const ret = {
     data,
     headers: {}
-  };
-
-  if (response.headers['x-total-count']) {
-    ret.headers['x-total-count'] = response.headers['x-total-count'];
   }
 
-  return ret;
+  if (response.headers['x-total-count']) {
+    ret.headers['x-total-count'] = response.headers['x-total-count']
+  }
+
+  return ret
 }
