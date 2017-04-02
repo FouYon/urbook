@@ -69,3 +69,13 @@ export function postcomment(params) {
     data: params
   })
 }
+
+export function gethome(params) {
+  return request('/api/home', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    params
+  })
+}

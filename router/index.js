@@ -6,6 +6,7 @@ const Book = require('./api/book.js')
 const User = require('./api/user.js')
 const Post = require('./api/post')
 const Image = require('./images.js')
+const Home = require('./api/home.js')
 
 module.exports = router
 
@@ -32,6 +33,9 @@ router
 router
   .get('/api/post', Post.get)
   .post('/api/post', Post.post)
+
+router
+  .get('/api/home', Home.get)
 
 router
   .get('/images/:params', Image.get)

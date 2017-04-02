@@ -33,6 +33,12 @@ const Book = ({ app, dispatch, loading }) => {
   const postComment = () => {
     dispatch({ type: 'app/postcomment', payload: { title: cur.title, user: cur.user, comment } })
   }
+  const search = (value) => {
+    dispatch({ type: 'app/search', payload: { value } })
+  }
+  const cancelsearch = () => {
+    dispatch({ type: 'app/cancelsearch' })
+  }
   return (
     <div>
       <ActivityIndicator animating={loading} toast size='large' />
@@ -141,7 +147,7 @@ const Book = ({ app, dispatch, loading }) => {
           </WingBlank>
         </div>
       </Mask>
-      <SearchBar />
+      <SearchBar onSubmit={search} onCancel={cancelsearch} />
       <WhiteSpace />
       {bookData.map(d => (
         <WingBlank key={d.user + d.title}>

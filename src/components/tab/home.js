@@ -1,9 +1,11 @@
 import React from 'react'
-import { Grid, WhiteSpace, WingBlank } from 'antd-mobile'
+import { connect } from 'dva'
+import { NoticeBar, Grid, WhiteSpace, WingBlank } from 'antd-mobile'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 
-const Home = () => {
+const Home = ({ app }) => {
+  const { homeData } = app
   const images = [
     {
       original: 'images/book1.jpg'
@@ -15,10 +17,6 @@ const Home = () => {
       original: 'images/book3.jpg'
     }
   ]
-  const data1 = Array.from(new Array(9)).map(() => ({
-    img: 'images/book.jpg',
-    text: '数据结构'
-  }))
   return (
     <div style={{ marginBottom: '120px' }}>
       <ImageGallery
@@ -32,8 +30,9 @@ const Home = () => {
       />
       <WhiteSpace />
       <WingBlank>
+        <NoticeBar>热门书籍</NoticeBar>
         <Grid
-          data={data1}
+          data={homeData}
           columnNum={3}
           hasLine={false}
           renderItem={(dataItem) => (
@@ -50,4 +49,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default connect(({ app, loading }) => ({ app, loading: loading.global }))(Home)

@@ -1,37 +1,42 @@
-const path = require('path');
+const path = require('path')
+const fs = require('fs')
 
-const db = require(path.resolve('./lib/db.js'));
-const getError = db.getError;
-const User = db.model('User');
-const Post = db.model('Post');
+const db = require(path.resolve('./lib/db.js'))
+const getError = db.getError
+const User = db.model('User')
+const Post = db.model('Post')
 
 module.exports.get = (req, res) => {
-  const phone = req.params.params;
+  const phone = req.params.params
   if (req.query.title) {
-    const { title, id } = req.query;
+    const { title, id } = req.query
     Post.findOne({ 'postBy': phone, 'title': title })
       .then(doc => {
-        if (!doc) return res.status(404).json({ message: '加载失败' });
-        const base64Data = doc.imgs[id].replace(/data:([A-Za-z-+/]+);base64,/, '');
-        const extname = doc.imgs[id].substring('data:image/'.length, base64Data.indexOf(';base64'));
-        const binary = new Buffer(base64Data, 'base64');
-        res.contentType(`image/${extname}`);
-        res.send(binary);
+        if (!doc) return res.status(404).json({ message: '加载失败' })
+        const base64Data = doc.imgs[id].replace(/data:([A-Za-z-+/]+);base64,/, '')
+        const extname = doc.imgs[id].substring('data:image/'.length, base64Data.indexOf(';base64'))
+        const binary = new Buffer(base64Data, 'base64')
+        res.contentType(`image/${extname}`)
+        res.send(binary)
       })
       .catch(err => {
-        return res.json({ error: getError(err) });
-      });
+        return res.json({ error: getError(err) })
+      })
   } else {
     User.findOne({ 'phone': phone })
       .then(doc => {
-        const base64Data = doc.avator.replace(/data:([A-Za-z-+/]+);base64,/, '');
-        const extname = doc.avator.substring('data:image/'.length, base64Data.indexOf(';base64'));
-        const binary = new Buffer(base64Data, 'base64');
-        res.contentType(`image/${extname}`);
-        res.send(binary);
+        const base64Data = doc.avator.replace(/data:([A-Za-z-+/]+);base64,/, '')
+        const extname = doc.avator.substring('data:image/'.length, base64Data.indexOf(';base64'))
+        const binary = new Buffer(base64Data, 'base64')
+        res.contentType(`image/${extname}`)
+        res.send(binary)
       })
-      .catch((err) => {
-        return res.status(404).json({ error: getError(err) });
-      });
+      .catch(() => {
+        const extname = path.extname(path.resolve('static/images/default.png')).split('').slice(1).join('')
+        const data = fs.readFileSync(path.resolve('static/images/default.png'))
+        res.contentType(`image/${extname}`)
+        res.send(data)
+        // return res.status(404).json({ error: getError(err) })
+      })
   }
-};
+}

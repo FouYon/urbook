@@ -1,6 +1,6 @@
 /* global localStorage, window, document */
 import { Toast } from 'antd-mobile'
-import { login, signup, getcomments, getbook, post, postcomment } from '../services/app'
+import { login, signup, getcomments, getbook, post, postcomment, gethome } from '../services/app'
 import { axios } from '../utils/request'
 
 const ERROR_MSG_DURATION = 3 // 3 秒
@@ -17,12 +17,14 @@ export default {
     showMask: false,
     showPost: false,
     bookData: [],
+    searchData: [],
     cur: {},
     comments: [],
     title: '',
     content: '',
     price: 10,
-    postfiles: []
+    postfiles: [],
+    homeData: []
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -30,12 +32,21 @@ export default {
       if (token) {
         axios.defaults.headers.common.Authorization = 'Bearer ' + token
         dispatch({ type: 'login', payload: { token } })
+        dispatch({ type: 'gethome' })
       } else {
         dispatch({ type: 'showLogin' })
       }
     }
   },
   effects: {
+    *gethome({ payload }, { call, put }) {
+      const { data } = yield call(gethome, payload)
+      if (data.message) {
+        yield put({ type: 'updateHome', payload: data.data })
+      } else {
+        Toast.fail('获取数据失败', ERROR_MSG_DURATION)
+      }
+    },
     *login({ payload }, { call, put }) {
       const { data } = yield call(login, payload)
       if (data.tokenLogin) {
@@ -117,6 +128,27 @@ export default {
     }
   },
   reducers: {
+    updateHome(state, { payload }) {
+      return {
+        ...state,
+        homeData: payload
+      }
+    },
+    search(state, { payload }) {
+      const { value } = payload
+      const bookData = state.searchData.filter(b => b.title.includes(value) || b.content.includes(value))
+      return {
+        ...state,
+        bookData
+      }
+    },
+    cancelsearch(state) {
+      const bookData = state.searchData
+      return {
+        ...state,
+        bookData
+      }
+    },
     commentSuccess(state, { payload }) {
       Toast.success('发送成功', ERROR_MSG_DURATION)
       document.getElementsByName('commenttext')[0].value = ''
@@ -278,7 +310,8 @@ export default {
     updateBook(state, { payload }) {
       return {
         ...state,
-        bookData: payload.data
+        bookData: payload.data,
+        searchData: payload.data
       }
     },
     updateBookFail(state, { payload }) {
