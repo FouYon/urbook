@@ -16,7 +16,7 @@ module.exports.post = (req, res) => {
     User
       .findOne({ phone, password })
       .then(doc => {
-        if (!doc) return res.status(200).json({ error: '用户未注册' });
+        if (!doc) return res.status(200).json({ error: '帐号或密码错误' });
         else {
           const token = jwt.sign({ phone: doc.phone }, 'jwt', { expiresIn: '1h' });
           return res.status(200).json({ message: '登录成功', token, phone });

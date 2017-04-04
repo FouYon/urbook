@@ -4,7 +4,8 @@ import { NoticeBar, Grid, WhiteSpace, WingBlank } from 'antd-mobile'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 
-const Home = ({ app }) => {
+const Home = ({ app, dispatch }) => {
+  dispatch({ type: 'gethome' })
   const { homeData } = app
   const images = [
     {

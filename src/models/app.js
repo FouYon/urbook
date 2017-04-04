@@ -29,10 +29,10 @@ export default {
   subscriptions: {
     setup({ dispatch }) {
       const token = localStorage.getItem('jwttoken')
+      dispatch({ type: 'gethome' })
       if (token) {
         axios.defaults.headers.common.Authorization = 'Bearer ' + token
         dispatch({ type: 'login', payload: { token } })
-        dispatch({ type: 'gethome' })
       } else {
         dispatch({ type: 'showLogin' })
       }
